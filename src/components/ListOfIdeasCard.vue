@@ -14,7 +14,7 @@
 
       <q-space />
 
-      <q-btn color="grey" round flat dense :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" @click="expanded = !expanded" />
+      <!-- <q-btn color="grey" round flat dense :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" @click="expanded = !expanded" /> -->
       <q-btn color="grey" round flat dense icon="arrow_forward" :to="{name: 'list', params: {'id': item.id}}" />
     </q-card-actions>
 
