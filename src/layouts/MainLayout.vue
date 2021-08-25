@@ -15,6 +15,10 @@
           Book Of Ideas
         </q-toolbar-title>
 
+        <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
+          <search-field v-show="searchFieldOpen" :location="'Book of Ideas'"/>
+        </transition>
+        <q-btn flat round dense icon="search" class="q-mr-xs" @click="toggleSearchField"/>
       </q-toolbar>
     </q-header>
 
@@ -54,6 +58,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import SearchField from 'src/components/SearchField.vue'
 
 const linksList = [];
 
@@ -64,17 +69,22 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink, SearchField
   },
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const searchFieldOpen = ref(false)
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
           leftDrawerOpen.value = !leftDrawerOpen.value
+      },
+      searchFieldOpen,
+      toggleSearchField() {
+        searchFieldOpen.value = !searchFieldOpen.value
       },
     }
   }
