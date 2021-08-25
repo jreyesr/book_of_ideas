@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 
 import main from './main-module'
+import search from './search-module'
 
 /*
  * If not building with SSR mode, you can
@@ -15,7 +16,8 @@ import main from './main-module'
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      main
+      main,
+      search
     },
 
     // enable strict mode (adds overhead!)

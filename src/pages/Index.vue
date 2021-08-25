@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import ListOfIdeasCard from 'src/components/ListOfIdeasCard.vue'
 
@@ -20,9 +20,10 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
+    const items = computed(() => store.getters["search/filtered"])
 
     return {
-      items: store.state.main.lists,
+      items,
     }
   }
 })

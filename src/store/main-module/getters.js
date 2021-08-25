@@ -1,3 +1,3 @@
 export function findListById (state) {
-    return (id) => state.lists.find((x) => x.id == id)
+  return (id) => state.lists.find((x) => x.id == id)
 }

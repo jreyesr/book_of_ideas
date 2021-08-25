@@ -15,10 +15,10 @@
           Book Of Ideas
         </q-toolbar-title>
 
-        <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
-          <search-field v-show="searchFieldOpen" :location="'Book of Ideas'"/>
+        <transition appear enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+          <search-field v-show="searchFieldOpen" :location="'Book of Ideas'" @searchTermChange="searchTermChange"/>
         </transition>
-        <q-btn flat round dense icon="search" class="q-mr-xs" @click="toggleSearchField"/>
+        <!-- <q-btn flat round dense icon="search" class="q-mr-xs" @click="toggleSearchField"/> -->
       </q-toolbar>
     </q-header>
 
@@ -63,7 +63,7 @@ import SearchField from 'src/components/SearchField.vue'
 const linksList = [];
 
 import { defineComponent, ref } from 'vue'
-import { useQuasar } from 'quasar'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -74,7 +74,9 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
-    const searchFieldOpen = ref(false)
+    const searchFieldOpen = ref(true)
+
+    const store = useStore()
 
     return {
       essentialLinks: linksList,
@@ -86,6 +88,10 @@ export default defineComponent({
       toggleSearchField() {
         searchFieldOpen.value = !searchFieldOpen.value
       },
+
+      searchTermChange(newValue) {       
+        store.commit("search/changeSearchTerm", newValue)
+      }
     }
   }
 })

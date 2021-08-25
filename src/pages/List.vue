@@ -14,7 +14,7 @@
         <q-item-section>You have no ideas in this list. Add a new one now!</q-item-section>
       </q-item>
 
-      <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="item in list.items" :key="item.id">
+      <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="item in filteredIdeas" :key="item.id">
         <q-item-section>
           <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption lines="1" v-for="line in linesToArray(item.description)" :key="line">{{ line }}</q-item-label>
@@ -42,6 +42,8 @@ export default {
     const list = computed(() => store.getters['main/findListById'](params.id))
     const isListEmpty = computed(() => list.value.items.length == 0)
 
+    const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
+
     const openDetails = (idea) => {
       $q.dialog({
         component: IdeaDetailsDialog,
@@ -54,11 +56,14 @@ export default {
 
     return {
       list,
+      filteredIdeas,
       isListEmpty,
       linesToArray,
 
       openDetails,
       addNew,
+
+      store
     }
   },
 }
