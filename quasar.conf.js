@@ -56,7 +56,7 @@ module.exports = configure(function (ctx) {
 
       // rtl: true, // https://v2.quasar.dev/options/rtl-support
       // preloadChunks: true,
-      // showProgress: false,
+      showProgress: true,
       // gzip: true,
       // analyze: true,
 
@@ -75,7 +75,7 @@ module.exports = configure(function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      // open: true // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework

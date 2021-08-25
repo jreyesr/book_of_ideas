@@ -6,6 +6,7 @@
   "author": "jreyesr <jreyesr@users.noreply.github.com>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },

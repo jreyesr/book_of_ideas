@@ -1,17 +1,53 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page padding>
+    <div class="row">
+      <div class="col-12 col-md-6" v-for="item in items" :key="item.name">
+        <list-of-ideas-card :item="item" />
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue'
+import ListOfIdeasCard from 'src/components/ListOfIdeasCard.vue'
+
+const ITEMS = [
+  {
+    id: "1",
+    name: "List A",
+    items: [{}, {}, {}],
+    description: "A list of robotic-related thingies"
+  },
+  {
+    id: "3",
+    name: "List B",
+    items: [],
+    description: "A list of not-robotic-related thingies"
+  },
+  {
+    id: "7",
+    name: "List C",
+    items: [{}, {}, {}],
+    description: "A list of robotic-related thingies"
+  },
+  {
+    id: "12",
+    name: "List D",
+    items: [],
+    description: "A list of not-robotic-related thingies"
+  },
+]
 
 export default defineComponent({
-  name: 'PageIndex'
+  name: 'PageIndex',
+  components: {
+    ListOfIdeasCard
+  },
+  setup () {
+    return {
+      items: ITEMS,
+    }
+  }
 })
 </script>
