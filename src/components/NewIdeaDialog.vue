@@ -37,12 +37,9 @@ export default {
     //                    example: onDialogOK({ /*.../* }) - with payload
     // onDialogCancel - Function to call to settle dialog with "cancel" outcome
 
-    const name = ref('')
-    const nameRef = ref(null)
-    const description = ref('')
-    const descriptionRef = ref(null)
-    const url = ref('')
-    const urlRef = ref(null)
+    const name = ref(''), nameRef = ref(null)
+    const description = ref(''), descriptionRef = ref(null)
+    const url = ref(''), urlRef = ref(null)
 
     const onValidSubmit = () => {
       const data = {
