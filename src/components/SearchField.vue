@@ -8,7 +8,7 @@
 
 <script>
 import { ref, toRefs, watch, computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore, mapGetters } from 'vuex'
 
 export default {
   props: ["location"],
@@ -19,8 +19,13 @@ export default {
     const store = useStore()
 
     const text = ref('')
+    const storeText = computed(() => store.state.search.searchTerm)
+    // Set up two-way watches between the local state (`text`) and the Vuex store (`searchTerm`)
     watch(text, (newValue) => {
       context.emit('searchTermChange', newValue)
+    })
+    watch(storeText, (newValue) => {
+      text.value = newValue
     })
 
     const location = computed(() => "Search " + (store.state.search.currentList?.name ?? "your lists"))

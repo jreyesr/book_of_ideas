@@ -27,6 +27,8 @@ export default route(function ({ store /*, ssrContext */}) {
   })
 
   Router.beforeEach((to) => {   
+    store.commit("search/clearSearchTerm")
+
     if(to.name == "list") {
       store.commit("search/changeViewedList", store.getters["main/findListById"](to.params.id))
     } else {
