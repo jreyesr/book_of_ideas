@@ -31,7 +31,7 @@ import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
-import IdeaDetailsDialog from 'src/components/IdeaDetailsDialog.vue'
+import { spawnNewIdeaDialog, spawnIdeaDetailsDialog } from 'src/utils/dialogs'
 
 export default {
   setup() {
@@ -44,15 +44,8 @@ export default {
 
     const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
 
-    const openDetails = (idea) => {
-      $q.dialog({
-        component: IdeaDetailsDialog,
-        componentProps: { idea },
-      }).onDismiss(() => {/* Do something here if required */})
-    }
-    const addNew = () => {
-      $q.notify('Adding element...')     
-    }
+    const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
+    const addNew = () => spawnNewIdeaDialog($q)
 
     return {
       list,

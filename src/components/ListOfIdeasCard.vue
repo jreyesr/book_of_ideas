@@ -10,7 +10,7 @@
     <q-card-section>{{ item.description }}</q-card-section>
 
     <q-card-actions>
-      <q-btn flat color="dark" label="Add new" />
+      <q-btn flat color="dark" label="Add new" @click="openNewDialog"/>
 
       <q-space />
 
@@ -31,19 +31,25 @@
 
 <script>
 import { ref, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useQuasar } from 'quasar'
+
+import { spawnNewIdeaDialog } from 'src/utils/dialogs'
 
 export default {
   props: ["item"],
 
   setup(props) {
+    const $q = useQuasar()
+
     const { item } = toRefs(props)
     const elementColor = () => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9'
+
+    const openNewDialog = () => spawnNewIdeaDialog($q)
 
     return {
       elementColor,
       expanded: ref(false),
+      openNewDialog
     }
   },
 }
