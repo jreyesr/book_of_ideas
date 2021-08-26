@@ -1,29 +1,21 @@
-export function filtered(state, _, rootState) {
-  // TODO: Add a more better fuzzy search
-  const listMatches = (list, text) => {
-    return list.name.toLowerCase().includes(text.toLowerCase()) || 
-      list.description.toLowerCase().includes(text.toLowerCase())
-  }
+import fuse, { fuseGeneral, fuseList } from "src/boot/fuse"
 
+export function filtered(state, _, rootState) {  
   if(state.searchTerm == "") {
     return rootState.main.lists
   } else {
-    return rootState.main.lists.filter((l) => listMatches(l, state.searchTerm))
+    return fuseGeneral.search(state.searchTerm).map((result) => result.item)
   }
 }
 
 export function filteredIdeas(state, _, rootState) {
-  // TODO: Add a more better fuzzy search
-  const ideaMatches = (idea, text) => {
-    return idea.name.toLowerCase().includes(text.toLowerCase()) || 
-    idea.description.toLowerCase().includes(text.toLowerCase())
-  }
-
-  if(state.currentList != null) {
-    // {...x, foo: 1} returns the same value as x, except for the key foo, which is overwritten by 1
-    // (the spread operator gives precedence to the right)
-    return state.currentList.items.filter((l) => ideaMatches(l, state.searchTerm))
-  } else {
+  if(state.currentList != null) { 
+    if(state.searchTerm == "") { // Fuse.js returns an empty list if search term is empty, which is NOT what we need
+      return state.currentList.items
+    } else { // Actually call the search function and extract results
+      return fuseList.search(state.searchTerm).map((result) => result.item)
+    }
+  } else { // Not in a List detail view
     return []
   }
 }
