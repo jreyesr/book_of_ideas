@@ -45,7 +45,7 @@ export default {
     const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
 
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
-    const addNew = () => spawnNewIdeaDialog($q)
+    const addNew = () => spawnNewIdeaDialog($q, params.id)
 
     return {
       list,

@@ -1,14 +1,52 @@
 <template>
   <q-dialog ref="dialogRef" @hide="onDialogHide">
-    <q-card class="q-dialog-plugin">
+    <q-card class="q-dialog-plugin wider-card">
+      <q-slide-transition>
+        <q-img v-show="picUrl" :src="picUrl" class="short-image" fit="cover">
+          <template v-slot:error>
+            <div class="absolute-full flex flex-center bg-negative text-white">
+              Cannot load image
+            </div>
+          </template>
+        </q-img>
+      </q-slide-transition>
+
       <q-card-section>
         <div class="text-h6">New idea</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <q-input label="Name" ref="nameRef" v-model="name" autofocus :rules="[val => !!val || 'Field is required']"/>
-        <q-input label="Description" ref="descriptionRef" type="textarea" v-model="description" :rules="[val => !!val || 'Field is required']"/>
-        <q-input label="Idea URL" ref="urlRef" v-model="url" :rules="[val => !!val || 'Field is required']"/>
+        <q-input 
+          label="Name" 
+          ref="nameRef" 
+          v-model="name" 
+          autofocus 
+          hint="Required" 
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input 
+          label="Description" 
+          ref="descriptionRef" 
+          type="textarea" 
+          rows="4"
+          hint="Required"
+          v-model="description" 
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input 
+          label="Idea URL" 
+          ref="urlRef" 
+          hint="Required"
+          v-model="url" 
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input 
+          label="Picture URL" 
+          ref="picUrlRef" 
+          v-model="picUrl" 
+          clearable 
+          clear-icon="close"
+        />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -19,8 +57,19 @@
   </q-dialog>
 </template>
 
+<style lang="scss">
+.wider-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.short-image {
+  max-height: 130px;
+}
+</style>
+
 <script>
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
 import { useDialogPluginComponent } from 'quasar'
 
 export default {
@@ -28,26 +77,26 @@ export default {
     ...useDialogPluginComponent.emits
   ],
 
-  setup () {
+  props: ["listId"],
+
+  setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
-    // dialogRef      - Vue ref to be applied to QDialog
-    // onDialogHide   - Function to be used as handler for @hide on QDialog
-    // onDialogOK     - Function to call to settle dialog with "ok" outcome
-    //                    example: onDialogOK() - no payload
-    //                    example: onDialogOK({ /*.../* }) - with payload
-    // onDialogCancel - Function to call to settle dialog with "cancel" outcome
+    
+    const listId = toRef(props, "listId").value
 
     const name = ref(''), nameRef = ref(null)
     const description = ref(''), descriptionRef = ref(null)
     const url = ref(''), urlRef = ref(null)
+    const picUrl = ref(''), picUrlRef = ref(null)
 
     const onValidSubmit = () => {
       const data = {
         name: name.value,
         description: description.value,
-        url: url.value
+        url: url.value,
+        picUrl: picUrl.value,
       }
-      onDialogOK(data)
+      onDialogOK({data, listId: listId})
     }
 
     const onSubmit = () => {
@@ -69,12 +118,10 @@ export default {
 
       onSubmit,
       
-      name,
-      nameRef,
-      description,
-      descriptionRef,
-      url,
-      urlRef,
+      name, nameRef,
+      description, descriptionRef,
+      url, urlRef,
+      picUrl, picUrlRef,
     }
   }
 }

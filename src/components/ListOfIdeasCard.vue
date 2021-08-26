@@ -44,7 +44,7 @@ export default {
     const { item } = toRefs(props)
     const elementColor = () => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9'
 
-    const openNewDialog = () => spawnNewIdeaDialog($q)
+    const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id)
 
     return {
       elementColor,

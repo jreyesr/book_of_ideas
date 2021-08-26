@@ -1,6 +1,15 @@
 <template>
   <q-dialog ref="dialogRef" @hide="onDialogHide">
-    <q-card class="q-dialog-plugin">
+    <q-card class="q-dialog-plugin wider-card">
+      <q-slide-transition>
+        <q-img v-if="idea.picUrl != ''" :src="idea.picUrl" height="250px" fit="cover">
+          <template v-slot:error>
+            <div class="absolute-full flex flex-center bg-negative text-white">
+              Cannot load image
+            </div>
+          </template>
+        </q-img>
+      </q-slide-transition>
       <q-card-section>
         <div class="text-h6">{{ idea.name }}</div>
       </q-card-section>
@@ -16,6 +25,17 @@
     </q-card>
   </q-dialog>
 </template>
+
+<style lang="scss">
+.wider-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.short-image {
+  max-height: 200px;
+}
+</style>
 
 <script>
 import { useDialogPluginComponent, openURL } from 'quasar'
