@@ -12,13 +12,13 @@ const spawnNewListDialog = ($q, store) => {
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
-const spawnNewIdeaDialog = ($q, listId, store) => {
+const spawnNewIdeaDialog = ($q, listId, store, refreshIndex=false) => {
   $q.dialog({
     component: NewIdeaDialog,
     componentProps: { listId },
     persistent: true
   }).onOk((data) => {
-    store.commit("main/addNewIdea", {listId, idea: data})
+    store.dispatch("main/addNewIdea", {listId, idea: data, refreshIndex})
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
