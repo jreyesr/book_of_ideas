@@ -1,10 +1,11 @@
 import NewIdeaDialog from 'src/components/NewIdeaDialog.vue'
 import IdeaDetailsDialog from 'src/components/IdeaDetailsDialog.vue'
+import ListEditDialog from 'src/components/ListEditDialog.vue'
 
 const spawnNewIdeaDialog = ($q, listId) => {
   $q.dialog({
     component: NewIdeaDialog,
-    componentProps: {listId},
+    componentProps: { listId },
     persistent: true
   }).onOk(({data, listId}) => {
     console.log(listId, data) // TODO: commit a mutation adding `data` to list `listId`
@@ -18,7 +19,18 @@ const spawnIdeaDetailsDialog = ($q, idea) => {
   }).onDismiss(() => {/* Do something here if required */})
 }
 
+const spawnListEditDialog = ($q, listId, store) => {
+  $q.dialog({
+    component: ListEditDialog,
+    componentProps: { listId },
+    persistent: true
+  }).onOk(({ newOrder }) => {
+    store.commit("main/changeListOrder", {listId, newOrder})
+  }).onDismiss(() => {/* Do something here if required */})  
+}
+
 export {
   spawnIdeaDetailsDialog,
   spawnNewIdeaDialog,
+  spawnListEditDialog,
 }

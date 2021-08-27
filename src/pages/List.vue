@@ -5,7 +5,10 @@
       <q-breadcrumbs-el :label="list.name" />
     </q-breadcrumbs>
 
-    <h4>{{ list.name }}</h4>
+    <h4>
+      {{ list.name }} 
+      <q-btn flat size="sm" color="primary" label="Edit" icon="edit" @click="openListEdit"/>
+      </h4>
 
     <p class="text-body1">{{ list.description }}</p>
 
@@ -31,7 +34,7 @@ import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
-import { spawnNewIdeaDialog, spawnIdeaDetailsDialog } from 'src/utils/dialogs'
+import { spawnNewIdeaDialog, spawnIdeaDetailsDialog, spawnListEditDialog } from 'src/utils/dialogs'
 
 export default {
   setup() {
@@ -46,6 +49,7 @@ export default {
 
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id)
+    const openListEdit = () => spawnListEditDialog($q, params.id, store)
 
     return {
       list,
@@ -55,6 +59,7 @@ export default {
 
       openDetails,
       addNew,
+      openListEdit,
 
       store
     }
