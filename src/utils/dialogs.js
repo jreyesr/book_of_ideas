@@ -1,14 +1,14 @@
 import NewListDialog from 'src/components/NewListDialog.vue'
 import NewIdeaDialog from 'src/components/NewIdeaDialog.vue'
 import IdeaDetailsDialog from 'src/components/IdeaDetailsDialog.vue'
-import ListEditDialog from 'src/components/ListEditDialog.vue'
+import ListReorderDialog from 'src/components/ListReorderDialog.vue'
 
 const spawnNewListDialog = ($q, store) => {
   $q.dialog({
     component: NewListDialog,
     persistent: true
   }).onOk((data) => {
-    store.commit("main/addNewList", {data})
+    store.dispatch("main/addNewList", {data})
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
@@ -29,9 +29,9 @@ const spawnIdeaDetailsDialog = ($q, idea) => {
   }).onDismiss(() => {/* Do something here if required */})
 }
 
-const spawnListEditDialog = ($q, listId, store) => {
+const spawnListReorderDialog = ($q, listId, store) => {
   $q.dialog({
-    component: ListEditDialog,
+    component: ListReorderDialog,
     componentProps: { listId },
     persistent: true
   }).onOk(({ newOrder }) => {
@@ -43,5 +43,5 @@ export {
   spawnIdeaDetailsDialog,
   spawnNewIdeaDialog,
   spawnNewListDialog,
-  spawnListEditDialog,
+  spawnListReorderDialog,
 }

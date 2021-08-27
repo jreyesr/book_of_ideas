@@ -7,7 +7,7 @@
 
     <h4>
       {{ list.name }} 
-      <q-btn flat size="sm" color="primary" label="Edit" icon="edit" @click="openListEdit"/>
+      <q-btn flat size="sm" color="primary" label="Reorder" icon="compare_arrows" class="q-px-sm" @click="openListReorder"/>
       </h4>
 
     <p class="text-body1">{{ list.description }}</p>
@@ -34,7 +34,7 @@ import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
-import { spawnNewIdeaDialog, spawnIdeaDetailsDialog, spawnListEditDialog } from 'src/utils/dialogs'
+import { spawnNewIdeaDialog, spawnIdeaDetailsDialog, spawnListReorderDialog } from 'src/utils/dialogs'
 
 export default {
   setup() {
@@ -49,7 +49,7 @@ export default {
 
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
-    const openListEdit = () => spawnListEditDialog($q, params.id, store)
+    const openListReorder = () => spawnListReorderDialog($q, params.id, store)
 
     return {
       list,
@@ -59,7 +59,7 @@ export default {
 
       openDetails,
       addNew,
-      openListEdit,
+      openListReorder,
 
       store
     }
