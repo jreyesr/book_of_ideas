@@ -35,7 +35,7 @@ const spawnListEditDialog = ($q, listId, store) => {
     componentProps: { listId },
     persistent: true
   }).onOk(({ newOrder }) => {
-    store.commit("main/changeListOrder", {listId, newOrder})
+    store.dispatch("main/changeListOrder", {listId, newOrder})
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
