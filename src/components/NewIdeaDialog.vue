@@ -96,7 +96,7 @@ export default {
         url: url.value,
         picUrl: picUrl.value,
       }
-      onDialogOK({data, listId: listId})
+      onDialogOK(data)
     }
 
     const onSubmit = () => {

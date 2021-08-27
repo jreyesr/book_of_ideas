@@ -32,6 +32,7 @@
 <script>
 import { ref, toRefs } from 'vue'
 import { useQuasar } from 'quasar'
+import { useStore } from 'vuex'
 
 import { spawnNewIdeaDialog } from 'src/utils/dialogs'
 
@@ -40,11 +41,12 @@ export default {
 
   setup(props) {
     const $q = useQuasar()
+    const store = useStore()
 
     const { item } = toRefs(props)
     const elementColor = () => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9'
 
-    const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id)
+    const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id, store)
 
     return {
       elementColor,
