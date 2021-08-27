@@ -31,7 +31,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { useQuasar } from 'quasar'
+import { useQuasar, useMeta } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
 import { spawnNewIdeaDialog, spawnIdeaDetailsDialog, spawnListReorderDialog } from 'src/utils/dialogs'
@@ -50,6 +50,7 @@ export default {
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
     const openListReorder = () => spawnListReorderDialog($q, params.id, store)
+    useMeta({title: list.value.name})
 
     return {
       list,

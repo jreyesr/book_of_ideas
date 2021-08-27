@@ -21,6 +21,7 @@
 <script>
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useMeta } from 'quasar'
 import ListOfIdeasCard from 'src/components/ListOfIdeasCard.vue'
 import NewListCard from 'src/components/NewListCard.vue'
 
@@ -33,6 +34,8 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const items = computed(() => store.getters["search/filtered"])
+
+    useMeta({title: "Book Of Ideas"})
 
     return {
       items,
