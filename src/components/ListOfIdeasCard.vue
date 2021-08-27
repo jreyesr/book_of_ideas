@@ -5,9 +5,9 @@
       <div class="text-overline" :class="elementColor()">{{ item.items.length }} items</div>
     </q-card-section>
 
-    <!-- <q-separator inset /> -->
-
     <q-card-section>{{ item.description }}</q-card-section>
+
+    <q-separator inset />
 
     <q-card-actions>
       <q-btn flat color="dark" label="Add new" @click="openNewDialog"/>
