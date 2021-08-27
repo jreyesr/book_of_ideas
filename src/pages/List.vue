@@ -2,14 +2,16 @@
   <q-page padding>
     <q-breadcrumbs>
       <q-breadcrumbs-el label="Home" :to="{ name: 'home' }" />
-      <q-breadcrumbs-el :label="list.name" />
+      <q-breadcrumbs-el :label="list?.name" />
     </q-breadcrumbs>
 
     <h4>
+      {{ list?.name }} 
+      <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" label="Reorder" icon="compare_arrows" class="q-px-sm" @click="openListReorder"/>
       <q-btn flat size="sm" color="negative" label="Delete" icon="delete" class="q-px-sm" @click="openListDelete"/>
-      </h4>
+    </h4>
 
-    <p class="text-body1">{{ list.description }}</p>
+    <p class="text-body1">{{ list?.description }}</p>
 
     <q-list bordered separator>
       <q-item v-if="isListEmpty" clickable v-ripple @click="addNew">
@@ -48,7 +50,8 @@ export default {
     const $q = useQuasar()
 
     const list = computed(() => store.getters['main/findListById'](params.id))
-    const isListEmpty = computed(() => list.value.items.length == 0)
+    const isListEmpty = computed(() => list.value?.items.length == 0)
+    const hasMultipleElements = computed(() => list.value?.items.length > 1)
 
     const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
 
@@ -68,6 +71,7 @@ export default {
       list,
       filteredIdeas,
       isListEmpty,
+      hasMultipleElements,
       linesToArray,
 
       openDetails,
