@@ -8,6 +8,12 @@ export function addNewList ({commit, state}, payload) {
   fuseGeneral.setCollection(state.lists)
 }
 
+export function deleteList ({commit, state}, payload) {
+  commit("deleteList", payload)
+
+  fuseGeneral.setCollection(state.lists)
+}
+
 export function addNewIdea ({commit, state}, payload) {
   commit("addNewIdea", payload)
 

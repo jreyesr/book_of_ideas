@@ -39,9 +39,24 @@ const spawnListReorderDialog = ($q, listId, store) => {
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
+const spawnListDeleteDialog = ($q, listId, store) => {
+  return new Promise((resolve) => {
+    $q.dialog({
+      title: 'Confirm deletion',
+      message: 'Do you really want to delete this list?',
+      ok: { color: "negative", label: "Yes" },
+      cancel: { color: "grey", label: "No" },
+    }).onOk(() => {
+      store.dispatch("main/deleteList", {listId})
+      resolve(true)
+    }).onCancel(() => resolve(false))
+  })
+}
+
 export {
   spawnIdeaDetailsDialog,
   spawnNewIdeaDialog,
   spawnNewListDialog,
   spawnListReorderDialog,
+  spawnListDeleteDialog,
 }

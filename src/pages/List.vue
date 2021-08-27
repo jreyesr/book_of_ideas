@@ -6,8 +6,7 @@
     </q-breadcrumbs>
 
     <h4>
-      {{ list.name }} 
-      <q-btn flat size="sm" color="primary" label="Reorder" icon="compare_arrows" class="q-px-sm" @click="openListReorder"/>
+      <q-btn flat size="sm" color="negative" label="Delete" icon="delete" class="q-px-sm" @click="openListDelete"/>
       </h4>
 
     <p class="text-body1">{{ list.description }}</p>
@@ -29,16 +28,22 @@
 
 <script>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar, useMeta } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
-import { spawnNewIdeaDialog, spawnIdeaDetailsDialog, spawnListReorderDialog } from 'src/utils/dialogs'
+import { 
+  spawnNewIdeaDialog, 
+  spawnIdeaDetailsDialog, 
+  spawnListReorderDialog,
+  spawnListDeleteDialog,
+} from 'src/utils/dialogs'
 
 export default {
   setup() {
     const { params } = useRoute()
+    const router = useRouter()
     const store = useStore()
     const $q = useQuasar()
 
@@ -50,6 +55,13 @@ export default {
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
     const openListReorder = () => spawnListReorderDialog($q, params.id, store)
+    const openListDelete = () => {
+      spawnListDeleteDialog($q, params.id, store).then((didDelete) => {
+        if(didDelete)
+          router.replace({name: "home"})
+      })
+    }
+
     useMeta({title: list.value.name})
 
     return {
@@ -61,6 +73,7 @@ export default {
       openDetails,
       addNew,
       openListReorder,
+      openListDelete,
 
       store
     }
