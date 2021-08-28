@@ -25,7 +25,6 @@ const spawnListEditDialog = ($q, store, list) => {
 const spawnNewIdeaDialog = ($q, listId, store, refreshIndex=false) => {
   $q.dialog({
     component: NewIdeaDialog,
-    componentProps: { listId },
     persistent: true
   }).onOk((data) => {
     store.dispatch("main/addNewIdea", {listId, idea: data, refreshIndex})

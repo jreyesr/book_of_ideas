@@ -37,8 +37,12 @@
           label="Idea URL" 
           ref="urlRef" 
           hint="Required"
-          v-model="url" 
-          :rules="[val => !!val || 'Field is required']"
+          v-model="url"
+          type="url"
+          :rules="[
+            val => !!val || 'Field is required',
+            val => isValidUrl(val) || 'Must be a valid URL'
+          ]"
         />
         <q-input 
           label="Picture URL" 
@@ -69,21 +73,18 @@
 </style>
 
 <script>
-import { ref, toRef } from 'vue'
+import { ref } from 'vue'
 import { useDialogPluginComponent } from 'quasar'
+import { isValidUrl } from 'src/utils/strings'
 
 export default {
   emits: [
     ...useDialogPluginComponent.emits
   ],
 
-  props: ["listId"],
-
   setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
     
-    const listId = toRef(props, "listId").value
-
     const name = ref(''), nameRef = ref(null)
     const description = ref(''), descriptionRef = ref(null)
     const url = ref(''), urlRef = ref(null)
@@ -122,6 +123,8 @@ export default {
       description, descriptionRef,
       url, urlRef,
       picUrl, picUrlRef,
+
+      isValidUrl,
     }
   }
 }
