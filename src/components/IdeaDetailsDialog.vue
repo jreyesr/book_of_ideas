@@ -11,7 +11,10 @@
         </q-img>
       </q-slide-transition>
       <q-card-section>
-        <div class="text-h6">{{ idea.name }}</div>
+        <div class="text-h6">
+          <q-icon class="q-pr-md align-baseline" v-if="idea.starred" name="star" color="amber"/>
+          {{ idea.name }}
+        </div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -34,6 +37,10 @@
 
 .short-image {
   max-height: 200px;
+}
+
+.align-baseline {
+  vertical-align: baseline;
 }
 </style>
 
