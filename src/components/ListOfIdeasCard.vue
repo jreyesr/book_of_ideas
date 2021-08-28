@@ -2,7 +2,9 @@
   <q-card class="q-ma-md" bordered>
     <q-card-section>
       <div class="text-h5">{{ item.name }}</div>
-      <div class="text-overline" :class="elementColor()">{{ item.items.length }} items</div>
+      <div class="text-overline" :class="elementColor()">
+        {{ item.items.length }} items<span v-if="starredCount > 0">, {{ starredCount }} starred</span>
+      </div>
     </q-card-section>
 
     <q-card-section>{{ item.description }}</q-card-section>
@@ -30,7 +32,7 @@
 </template>
 
 <script>
-import { ref, toRefs } from 'vue'
+import { ref, toRef, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 
@@ -43,13 +45,16 @@ export default {
     const $q = useQuasar()
     const store = useStore()
 
-    const { item } = toRefs(props)
+    const item = toRef(props, "item")
     const elementColor = () => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9'
+    const starredCount = computed(() => item.value.items.filter(i => i.starred === true).length)
 
     const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id, store)
 
     return {
       elementColor,
+      starredCount,
+
       expanded: ref(false),
       openNewDialog
     }
