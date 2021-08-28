@@ -7,7 +7,7 @@
 
     <h4>
       {{ list?.name }} 
-      <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" class="q-px-sm" @click="openListReorder">
+      <q-btn v-if="!isListEmpty" flat size="sm" color="primary" class="text-primary q-px-sm" @click="openListReorder">
         <q-icon name="format_list_bulleted" class="q-mr-xs"/>
         <div>Items</div>
       </q-btn>
