@@ -96,6 +96,16 @@ export default {
     }
 
     const toggleStar = (itemIndex) => {
+      const item = list.value.items[itemIndex]
+      const action = item.starred ? "Unstarring" : "Starring"
+      $q.notify({
+        message: `${action} ${item.name}`,
+        icon: "star_outline",
+        group: "starring-group", // This forces all star/unstar messages to overwrite each other
+        timeout: 750,
+        // badgeClass: "hidden", // Uncomment this to make the notification counter disappear
+      })
+      
       store.commit("main/toggleStar", {listId: list.value.id, itemIndex})
     }
 
