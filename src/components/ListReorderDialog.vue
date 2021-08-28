@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin wider-card">
       <q-card-section>
-        <div class="text-h6">Reorder list</div>
+        <div class="text-h6">Manage items</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">

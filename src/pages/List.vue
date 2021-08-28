@@ -8,8 +8,8 @@
     <h4>
       {{ list?.name }} 
       <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" class="q-px-sm" @click="openListReorder">
-        <q-icon name="compare_arrows" class="q-mr-xs"/>
-        <div>Reorder</div>
+        <q-icon name="format_list_bulleted" class="q-mr-xs"/>
+        <div>Items</div>
       </q-btn>
       <q-btn flat size="sm" color="primary" class="q-px-sm" @click="openListEdit">
         <q-icon name="edit" class="q-mr-xs"/>
