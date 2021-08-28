@@ -28,7 +28,8 @@ export function addNewIdea (state, { listId, idea }) {
   }
 
   // Autogenerate a RFC4122 v4 UUID here, and hope it doesn't collide with anything else
-  idea.id = uuidv4() 
+  idea.id = uuidv4()
+  idea.starred = false
   state.lists[i].items.push(idea)
 }
 
@@ -52,4 +53,16 @@ export function changeListOrder (state, { listId, newOrder }) {
   }
   
   state.lists[i].items = newOrder
+}
+
+export function toggleStar (state, {listId, itemIndex}) {
+  const i = findIndex(state, listId)
+  if (i == -1) { // Something went horribly wrong here!
+    console.error(`Couldn't find list with ID ${listId}!`)
+    return
+  }
+
+  // If idea.starred does not exist, it will default to false and be toggled to true
+  // (should NOT happen, but juuuust in case)
+  state.lists[i].items[itemIndex].starred = !(state.lists[i].items[itemIndex].starred ?? false);
 }

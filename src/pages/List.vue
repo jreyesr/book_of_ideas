@@ -28,7 +28,7 @@
         <q-item-section>You have no ideas in this list. Add a new one now!</q-item-section>
       </q-item>
 
-      <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="item in filteredIdeas" :key="item.id">
+      <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="(item, i) in filteredIdeas" :key="item.id">
         <q-item-section thumbnail v-if="item.picUrl">
           <img :src="item.picUrl">
         </q-item-section>
@@ -39,6 +39,11 @@
         <q-item-section>
           <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption lines="1" v-for="line in linesToArray(item.description)" :key="line">{{ line }}</q-item-label>
+        </q-item-section>
+        <q-item-section side>
+          <q-btn round flat color="amber" @click.stop="toggleStar(i)">
+            <q-icon :name="item.starred ? 'star' : 'star_outline'"/>
+          </q-btn>
         </q-item-section>
       </q-item>
     </q-list>
@@ -90,6 +95,10 @@ export default {
       })
     }
 
+    const toggleStar = (itemIndex) => {
+      store.commit("main/toggleStar", {listId: list.value.id, itemIndex})
+    }
+
     useMeta(() => {
       return { title: list.value.name }
     })
@@ -106,6 +115,7 @@ export default {
       openListReorder,
       openListEdit,
       openListDelete,
+      toggleStar,
 
       store
     }
