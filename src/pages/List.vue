@@ -110,7 +110,7 @@ export default {
     }
 
     useMeta(() => {
-      return { title: list.value.name }
+      return { title: list.value?.name ?? "<Deleted>" }
     })
 
     return {
