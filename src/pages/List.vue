@@ -29,6 +29,13 @@
       </q-item>
 
       <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="item in filteredIdeas" :key="item.id">
+        <q-item-section thumbnail v-if="item.picUrl">
+          <img :src="item.picUrl">
+        </q-item-section>
+        <q-item-section thumbnail v-else>
+          <!-- Placeholder image, just to align the titles -->
+          <img class="invisible"> 
+        </q-item-section>
         <q-item-section>
           <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption lines="1" v-for="line in linesToArray(item.description)" :key="line">{{ line }}</q-item-label>
@@ -37,6 +44,12 @@
     </q-list>
   </q-page>
 </template>
+
+<style lang="scss">
+.invisible {
+  visibility: hidden;
+}
+</style>
 
 <script>
 import { computed, ref } from 'vue'
