@@ -28,9 +28,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install
-        run: yarn install
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      # https://stackoverflow.com/a/62244232
+      - name: Install dependencies
+        run: yarn --prefer-offline
 
       - name: Build
         run: yarn build
@@ -38,7 +38,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # should not be needed?
-          # BASE_BRANCH: master # this is apparently an old, no longer used conf???
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # the token is not needed
           branch: gh-pages
           folder: dist/spa
