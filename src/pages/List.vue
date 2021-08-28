@@ -7,9 +7,18 @@
 
     <h4>
       {{ list?.name }} 
-      <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" label="Reorder" icon="compare_arrows" class="q-px-sm" @click="openListReorder"/>
-      <q-btn flat size="sm" color="primary" label="Edit" icon="edit" class="q-px-sm" @click="openListEdit"/>
-      <q-btn flat size="sm" color="negative" label="Delete" icon="delete" class="q-px-sm" @click="openListDelete"/>
+      <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" class="q-px-sm" @click="openListReorder">
+        <q-icon name="compare_arrows" class="q-mr-xs"/>
+        <div>Reorder</div>
+      </q-btn>
+      <q-btn flat size="sm" color="primary" class="q-px-sm" @click="openListEdit">
+        <q-icon name="edit" class="q-mr-xs"/>
+        <div>Edit</div>
+      </q-btn>
+      <q-btn flat size="sm" color="negative" class="q-px-sm" @click="openListDelete">
+        <q-icon name="delete" class="q-mr-xs"/>
+        <div>Delete</div>
+      </q-btn>
     </h4>
 
     <p class="text-body1">{{ list?.description }}</p>
