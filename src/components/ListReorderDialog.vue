@@ -23,7 +23,10 @@
           <template #item="{ element }">
             <li class="list-group-item">
               <q-icon name="drag_indicator" class="handle"/>
-              <span>{{ element.name }}</span>
+              <span class="text-content">{{ element.name }}</span>
+              <q-btn flat round size="xs" class="close" @click="openIdeaDelete(element)">
+                <q-icon name="close"/>
+              </q-btn>
             </li>
           </template>
         </draggable>
@@ -73,7 +76,7 @@
   background-color: #fff;
   border: 1px solid rgba(0,0,0,.125);
 
-  span {
+  span.text-content {
     cursor: text;
     line-height: 2rem;
   }
@@ -83,25 +86,21 @@
   float: left;
   padding: 0.5rem
 }
+
+.close {
+  float: right;
+  padding: 0.5rem;
+}
 </style>
 
 <script>
 import { ref, toRef, computed } from 'vue'
-import { useDialogPluginComponent } from 'quasar'
+import { useQuasar, useDialogPluginComponent } from 'quasar'
 import { useStore } from 'vuex'
 
-import draggable from "vuedraggable";
+import { spawnIdeaDeleteDialog } from 'src/utils/dialogs'
 
-const message = [
-  "vue.draggable",
-  "draggable",
-  "component",
-  "for",
-  "vue.js 2.0",
-  "based",
-  "on",
-  "Sortablejs"
-];
+import draggable from "vuedraggable";
 
 export default {
   props: {
@@ -116,6 +115,7 @@ export default {
 
   setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+    const $q = useQuasar()
     const store = useStore()
 
     const listId = toRef(props, "listId").value
@@ -124,6 +124,10 @@ export default {
 
     const onOKClick = () => {
         onDialogOK({newOrder: listItems.value})
+    }
+
+    const openIdeaDelete = (idea) => {
+      spawnIdeaDeleteDialog($q, listId, idea, store)
     }
 
     const dragOptions = computed(() => {
@@ -141,6 +145,8 @@ export default {
 
       onOKClick,
       onCancelClick: onDialogCancel,
+
+      openIdeaDelete,
 
       listItems,
       dragOptions,

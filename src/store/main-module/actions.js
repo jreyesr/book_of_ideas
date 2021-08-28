@@ -32,6 +32,13 @@ export function addNewIdea ({commit, state}, payload) {
   fuseGeneral.setCollection(state.lists)
 }
 
+export function deleteIdea ({commit, state}, payload) {
+  commit("deleteIdea", payload)
+
+  commit("search/changeViewedList", findListById(state)(payload.listId), { root: true })
+  fuseGeneral.setCollection(state.lists)
+}
+
 export function changeListOrder ({commit, state}, payload) {
   commit("changeListOrder", payload)
 

@@ -63,6 +63,20 @@ const spawnListDeleteDialog = ($q, listId, store) => {
   })
 }
 
+const spawnIdeaDeleteDialog = ($q, listId, idea, store) => {
+  return new Promise((resolve) => {
+    $q.dialog({
+      title: 'Confirm deletion',
+      message: `Do you really want to delete ${idea.name}?`,
+      ok: { color: "negative", label: "Yes" },
+      cancel: { color: "grey", label: "No" },
+    }).onOk(() => {
+      store.dispatch("main/deleteIdea", {listId, ideaId: idea.id})
+      resolve(true)
+    }).onCancel(() => resolve(false))
+  })
+}
+
 export {
   spawnIdeaDetailsDialog,
   spawnNewIdeaDialog,
@@ -70,4 +84,5 @@ export {
   spawnListEditDialog,
   spawnListReorderDialog,
   spawnListDeleteDialog,
+  spawnIdeaDeleteDialog,
 }

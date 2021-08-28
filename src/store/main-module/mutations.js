@@ -32,6 +32,18 @@ export function addNewIdea (state, { listId, idea }) {
   state.lists[i].items.push(idea)
 }
 
+export function deleteIdea (state, { listId, ideaId }) {
+  // arr.splice(i,1) *should* remove a single element at index i
+  // NOTE: arr.splice works IN PLACE, return value is the deleted elements!
+  const i = findIndex(state, listId)
+  if (i == -1) { // Something went horribly wrong here!
+    console.error(`Couldn't find list with ID ${listId}!`)
+    return
+  }
+  const j = state.lists[i].items.findIndex((i) => i.id == ideaId) // The index of the Idea inside the .items array
+  state.lists[i].items.splice(j, 1) // Splice the Idea out of the array
+}
+
 export function changeListOrder (state, { listId, newOrder }) {
   const i = findIndex(state, listId)
   if (i == -1) { // Something went horribly wrong here!
