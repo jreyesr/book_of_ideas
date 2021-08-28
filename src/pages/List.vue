@@ -68,7 +68,9 @@ export default {
       })
     }
 
-    useMeta({title: list.value.name})
+    useMeta(() => {
+      return { title: list.value.name }
+    })
 
     return {
       list,
