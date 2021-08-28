@@ -36,5 +36,10 @@ export default route(function ({ store /*, ssrContext */}) {
     }
   })
 
+  Router.beforeEach(async (to, from, next) => {
+    await store.restored;
+    next();
+  });
+
   return Router
 })
