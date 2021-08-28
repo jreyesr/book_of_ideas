@@ -8,6 +8,7 @@
     <h4>
       {{ list?.name }} 
       <q-btn v-if="hasMultipleElements" flat size="sm" color="primary" label="Reorder" icon="compare_arrows" class="q-px-sm" @click="openListReorder"/>
+      <q-btn flat size="sm" color="primary" label="Edit" icon="edit" class="q-px-sm" @click="openListEdit"/>
       <q-btn flat size="sm" color="negative" label="Delete" icon="delete" class="q-px-sm" @click="openListDelete"/>
     </h4>
 
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar, useMeta } from 'quasar'
@@ -40,6 +41,7 @@ import {
   spawnIdeaDetailsDialog, 
   spawnListReorderDialog,
   spawnListDeleteDialog,
+  spawnListEditDialog
 } from 'src/utils/dialogs'
 
 export default {
@@ -58,6 +60,7 @@ export default {
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
     const openListReorder = () => spawnListReorderDialog($q, params.id, store)
+    const openListEdit = () => spawnListEditDialog($q, store, list)
     const openListDelete = () => {
       spawnListDeleteDialog($q, params.id, store).then((didDelete) => {
         if(didDelete)
@@ -77,6 +80,7 @@ export default {
       openDetails,
       addNew,
       openListReorder,
+      openListEdit,
       openListDelete,
 
       store

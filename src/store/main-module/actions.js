@@ -8,6 +8,13 @@ export function addNewList ({commit, state}, payload) {
   fuseGeneral.setCollection(state.lists)
 }
 
+export function editList ({commit, state}, payload) {
+  commit("editList", payload)
+  
+  // Force the main Fuse instance to reupdate its index
+  fuseGeneral.setCollection(state.lists)
+}
+
 export function deleteList ({commit, state}, payload) {
   commit("deleteList", payload)
 

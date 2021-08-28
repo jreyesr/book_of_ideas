@@ -9,6 +9,11 @@ export function addNewList (state, { data }) {
   state.lists.push(data)
 }
 
+export function editList (state, { data }) {
+  const i = findIndex(state, data.id)
+  state.lists[i] = data
+}
+
 export function deleteList (state, { listId }) {
   // arr.splice(i,1) *should* remove a single element at index i
   // NOTE: arr.splice works IN PLACE, return value is the deleted elements!

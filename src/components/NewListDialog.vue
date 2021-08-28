@@ -77,12 +77,21 @@ export default {
     ...useDialogPluginComponent.emits
   ],
 
+  props: {
+    list: {
+      type: Object,
+      optional: true
+    }
+  },
 
-  setup () {
+  setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+
+    const list = toRef(props, "list").value // will be undefined if no `list` prop was passed
     
-    const name = ref(''), nameRef = ref(null)
-    const description = ref(''), descriptionRef = ref(null)
+    // x?.prop ?? '' works whether or not x is defined, and sets a default value of ''
+    const name = ref(list?.name ?? ''), nameRef = ref(null)
+    const description = ref(list?.description ?? ''), descriptionRef = ref(null)
     /* const url = ref(''), urlRef = ref(null)
     const picUrl = ref(''), picUrlRef = ref(null) */
 
@@ -90,6 +99,9 @@ export default {
       const data = {
         name: name.value,
         description: description.value,
+        // id and items will be overwritten in the mutation anyways
+        id: list?.id,
+        items: list?.items,
         /* url: url.value,
         picUrl: picUrl.value, */
       }

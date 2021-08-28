@@ -12,6 +12,16 @@ const spawnNewListDialog = ($q, store) => {
   }).onDismiss(() => {/* Do something here if required */})  
 }
 
+const spawnListEditDialog = ($q, store, list) => {
+  $q.dialog({
+    component: NewListDialog,
+    componentProps: { list },
+    persistent: true
+  }).onOk((data) => {
+    store.dispatch("main/editList", {data})
+  }).onDismiss(() => {/* Do something here if required */})  
+}
+
 const spawnNewIdeaDialog = ($q, listId, store, refreshIndex=false) => {
   $q.dialog({
     component: NewIdeaDialog,
@@ -57,6 +67,7 @@ export {
   spawnIdeaDetailsDialog,
   spawnNewIdeaDialog,
   spawnNewListDialog,
+  spawnListEditDialog,
   spawnListReorderDialog,
   spawnListDeleteDialog,
 }
