@@ -28,7 +28,14 @@
         <q-item-section>You have no ideas in this list. Add a new one now!</q-item-section>
       </q-item>
 
-      <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="(item, i) in filteredIdeas" :key="item.id">
+      <q-item v-else 
+        clickable 
+        v-ripple 
+        @click="openDetails(item)" 
+        v-for="(item, i) in filteredIdeas" 
+        :key="item.id"
+        :class="item.starred ? 'bg-amber-1' : ''"
+      >
         <q-item-section thumbnail v-if="picUrl(item)">
           <img :src="picUrl(item)">
         </q-item-section>
