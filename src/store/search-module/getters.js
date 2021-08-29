@@ -4,7 +4,7 @@ export function searchActive(state) {
   return state.searchTerm !== ""
 }
 
-export function filtered(state, getters) {  
+export function filtered(state, getters, rootState) {  
   if(getters.searchActive) {
     return fuseGeneral.search(state.searchTerm).map((result) => result.item)
   } else {
