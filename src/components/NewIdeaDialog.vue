@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin wider-card">
       <q-slide-transition>
-        <q-img v-show="picUrl" :src="picUrl" class="short-image" fit="cover">
+        <q-img v-show="picLink" :src="picLink" class="short-image" fit="cover">
           <template v-slot:error>
             <div class="absolute-full flex flex-center bg-negative text-white">
               Cannot load image
@@ -44,20 +44,46 @@
             val => isValidUrl(val) || 'Must be a valid URL'
           ]"
         />
-        <q-input 
-          label="Picture URL" 
-          ref="picUrlRef" 
-          v-model="picUrl" 
-          clearable 
-          clear-icon="close"
+
+        <q-option-group
+        class="q-pt-md"
+          dense inline
+          v-model="picSource"
+          :options="[
+            { label: 'Online image', value: 'url' },
+            { label: 'Upload image', value: 'upload' },
+            { label: 'No image', value: 'none' }
+          ]"
+          color="primary"
         />
-        <q-file
-          label="Picture"
-          ref="picFileRef"
-          v-model="picFile"
-          clearable
-          clear-icon="close"
-        />
+        <q-slide-transition>
+          <q-input 
+            v-show="picSource === 'url'"
+            label="Picture URL" 
+            ref="picUrlRef" 
+            v-model="picUrl" 
+            clearable 
+            clear-icon="close"
+            :rules="[
+              val => !val || isValidUrl(val) || 'Must be a valid URL'
+            ]"
+          />
+        </q-slide-transition>
+        <q-slide-transition>
+          <q-file
+            v-if="picSource === 'upload'"
+            label="Picture"
+            ref="picFileRef"
+            v-model="picFile"
+            accept="image/*"
+            clearable
+            clear-icon="close"
+          >
+            <template #before>
+              <q-icon name="file_upload"/>
+            </template>
+          </q-file>
+        </q-slide-transition>
       </q-card-section>
 
       <q-card-actions align="right">
@@ -80,7 +106,7 @@
 </style>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useDialogPluginComponent } from 'quasar'
 import { isValidUrl } from 'src/utils/strings'
 
@@ -98,13 +124,21 @@ export default {
     const picUrl = ref(''), picUrlRef = ref(null)
     const picFile = ref(null), picFileRef = ref(null)
 
+    const picSource = ref('none')
+    const picLink = computed(() => {
+      if (picSource.value === 'none') return ''
+      else if (picSource.value === 'url') return picUrl.value
+      else if (picSource.value === 'upload' && picFile.value) return URL.createObjectURL(picFile.value)
+      else return null
+    })
+
     const onValidSubmit = () => {
       const data = {
         name: name.value,
         description: description.value,
         url: url.value,
-        picUrl: picUrl.value,
-        picFile: picFile.value
+        picUrl: picSource.value === 'url' ? picUrl.value : '',
+        picFile: picSource.value === 'upload' ? picFile.value : null
       }
       onDialogOK(data)
     }
@@ -131,10 +165,12 @@ export default {
       name, nameRef,
       description, descriptionRef,
       url, urlRef,
+      picSource,
       picUrl, picUrlRef,
       picFile, picFileRef,
 
       isValidUrl,
+      picLink
     }
   }
 }
