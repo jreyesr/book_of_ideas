@@ -20,7 +20,11 @@ export function editList ({commit, state}, payload) {
   fuseGeneral.setCollection(state.lists)
 }
 
-export function deleteList ({commit, state}, payload) {
+export function deleteList ({dispatch, commit, state, getters}, payload) {
+  // Delete all images from the `images` store
+  for(const idea of getters.findListById(payload.listId).items) {
+    dispatch("images/deleteImage", { ideaId: idea.id }, { root: true})
+  }
   commit("deleteList", payload)
 
   fuseGeneral.setCollection(state.lists)

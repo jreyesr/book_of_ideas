@@ -5,7 +5,7 @@ export function getImageSrc(state, _1, _2, rootGetters) {
       return URL.createObjectURL(state.images[ideaId])
     }
     else {
-      return rootGetters["main/findIdeayId"](ideaId).picUrl
+      return rootGetters["main/findIdeaById"](ideaId)?.picUrl
     }
   }
 }

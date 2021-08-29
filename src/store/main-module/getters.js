@@ -2,7 +2,7 @@ export function findListById (state) {
   return (id) => state.lists.find(l => l.id == id)
 }
 
-export function findIdeayId (state) {
+export function findIdeaById (state) {
   // lists
   //  .map()  -> extracts the `items` array
   //  .flat() -> flattens the two-level array

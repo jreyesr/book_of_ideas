@@ -83,7 +83,7 @@ export default {
     const hasMultipleElements = computed(() => list.value?.items.length > 1)
 
     const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
-    const picUrl = (idea) => store.getters["images/getImageSrc"](idea.id)
+    const picUrl = (idea) => idea ? store.getters["images/getImageSrc"](idea.id) : ""
 
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
