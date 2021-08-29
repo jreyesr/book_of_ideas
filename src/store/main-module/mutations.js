@@ -37,6 +37,20 @@ export function deleteIdea (state, { listId, ideaId }) {
   state.lists[i].items.splice(j, 1) // Splice the Idea out of the array
 }
 
+export function changeMasterListOrder (state, { newOrder }) {
+  // Quick sanity ckeck: all IDs must appear on the new list
+  // (i.e., no Lists must be lost when changing the order)
+  const currentIds = state.lists.map(l => l.id) // An array of IDs
+  if (!currentIds.every(id => newOrder.map(l => l.id).includes(id))) {
+    console.error("Not all Lists accounted for when reordering!")
+    console.error(currentIds)
+    console.error(newOrder.map(l => l.id))
+    return
+  }
+
+  state.lists = newOrder
+}
+
 export function changeListOrder (state, { listId, newOrder }) {
   const i = findIndex(state, listId)
   if (i == -1) { // Something went horribly wrong here!

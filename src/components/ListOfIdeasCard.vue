@@ -1,8 +1,13 @@
 <template>
   <q-card class="q-ma-md" bordered>
     <q-card-section>
-      <div class="text-h5">{{ item.name }}</div>
-      <div class="text-overline" :class="elementColor()">
+      <div class="row">
+        <div class="col text-h5">{{ item.name }}</div>
+        <div v-if="showHandle" class="col-auto handle">
+          <q-icon name="drag_indicator" size="xs"/>
+        </div>
+      </div>
+      <div class="text-overline" :class="elementColor">
         {{ item.items.length }} items<span v-if="starredCount > 0">, {{ starredCount }} starred</span>
       </div>
     </q-card-section>
@@ -39,14 +44,14 @@ import { useStore } from 'vuex'
 import { spawnNewIdeaDialog } from 'src/utils/dialogs'
 
 export default {
-  props: ["item"],
+  props: ["item", "showHandle"],
 
   setup(props) {
     const $q = useQuasar()
     const store = useStore()
 
     const item = toRef(props, "item")
-    const elementColor = () => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9'
+    const elementColor = computed(() => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9')
     const starredCount = computed(() => item.value.items.filter(i => i.starred === true).length)
 
     const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id, store)

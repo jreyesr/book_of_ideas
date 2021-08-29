@@ -1,14 +1,18 @@
 import fuse, { fuseGeneral, fuseList } from "src/boot/fuse"
 
-export function filtered(state, _, rootState) {  
-  if(state.searchTerm == "") {
-    return rootState.main.lists
-  } else {
+export function searchActive(state) {
+  return state.searchTerm !== ""
+}
+
+export function filtered(state, getters) {  
+  if(getters.searchActive) {
     return fuseGeneral.search(state.searchTerm).map((result) => result.item)
+  } else {
+    return rootState.main.lists
   }
 }
 
-export function filteredIdeas(state, _, rootState) {
+export function filteredIdeas(state) {
   if(state.currentList != null) { 
     if(state.searchTerm == "") { // Fuse.js returns an empty list if search term is empty, which is NOT what we need
       return state.currentList.items

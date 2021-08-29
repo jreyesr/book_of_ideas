@@ -59,6 +59,13 @@ export function deleteIdea ({dispatch, commit, state}, payload) {
   fuseGeneral.setCollection(state.lists)
 }
 
+export function changeMasterListOrder ({commit, state}, payload) {
+  commit("changeMasterListOrder", payload)
+
+  // Force the main Fuse instance to reupdate its index
+  fuseGeneral.setCollection(state.lists)
+}
+
 export function changeListOrder ({commit, state}, payload) {
   commit("changeListOrder", payload)
 

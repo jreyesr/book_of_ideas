@@ -100,7 +100,7 @@ import { useStore } from 'vuex'
 
 import { spawnIdeaDeleteDialog } from 'src/utils/dialogs'
 
-import draggable from "vuedraggable";
+import draggable from "vuedraggable"
 
 export default {
   props: {
