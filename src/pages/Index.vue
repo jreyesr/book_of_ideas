@@ -23,7 +23,7 @@
         </template>
         
         <template #footer>
-          <div class="col-12 col-md-6 center-children-y" key="new_idea">
+          <div v-if="!searchActive" class="col-12 col-md-6 center-children-y" key="new_idea">
             <new-list-card style="flex-grow: 1;"/>
           </div>
         </template>
