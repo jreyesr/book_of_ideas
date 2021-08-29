@@ -29,8 +29,8 @@
       </q-item>
 
       <q-item v-else clickable v-ripple @click="openDetails(item)" v-for="(item, i) in filteredIdeas" :key="item.id">
-        <q-item-section thumbnail v-if="item.picUrl">
-          <img :src="item.picUrl">
+        <q-item-section thumbnail v-if="picUrl(item)">
+          <img :src="picUrl(item)">
         </q-item-section>
         <q-item-section thumbnail v-else>
           <!-- Placeholder image, just to align the titles -->
@@ -83,6 +83,7 @@ export default {
     const hasMultipleElements = computed(() => list.value?.items.length > 1)
 
     const filteredIdeas = computed(() => store.getters["search/filteredIdeas"])
+    const picUrl = (idea) => store.getters["images/getImageSrc"](idea.id)
 
     const openDetails = (idea) => spawnIdeaDetailsDialog($q, idea)
     const addNew = () => spawnNewIdeaDialog($q, params.id, store, true)
@@ -116,6 +117,7 @@ export default {
     return {
       list,
       filteredIdeas,
+      picUrl,
       isListEmpty,
       hasMultipleElements,
       linesToArray,

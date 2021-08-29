@@ -5,6 +5,7 @@ import VuexPersistence from 'vuex-persist'
 
 import main from './main-module'
 import search from './search-module'
+import images from './images-module'
 
 const persistence = new VuexPersistence({
   storage: localForage,
@@ -14,14 +15,24 @@ const persistence = new VuexPersistence({
   //restoreState: (key, storage) => storage.getItem(key), // Not required, the default is OK
   modules: ["main"]
 })
+const imagesPersistence = new VuexPersistence({
+  storage: localForage,
+  key: "vuex-images",
+  asyncStorage: true,
+  saveState: (key, state, storage) => {
+    storage.setItem(key, state)
+  },
+  reducer: (state) => ({images: {...state.images.images}}),
+})
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
       main,
-      search
+      search,
+      images,
     },
-    plugins: [persistence.plugin],
+    plugins: [persistence.plugin, imagesPersistence.plugin],
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only

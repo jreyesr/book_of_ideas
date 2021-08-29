@@ -51,6 +51,13 @@
           clearable 
           clear-icon="close"
         />
+        <q-file
+          label="Picture"
+          ref="picFileRef"
+          v-model="picFile"
+          clearable
+          clear-icon="close"
+        />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -89,6 +96,7 @@ export default {
     const description = ref(''), descriptionRef = ref(null)
     const url = ref(''), urlRef = ref(null)
     const picUrl = ref(''), picUrlRef = ref(null)
+    const picFile = ref(null), picFileRef = ref(null)
 
     const onValidSubmit = () => {
       const data = {
@@ -96,6 +104,7 @@ export default {
         description: description.value,
         url: url.value,
         picUrl: picUrl.value,
+        picFile: picFile.value
       }
       onDialogOK(data)
     }
@@ -123,6 +132,7 @@ export default {
       description, descriptionRef,
       url, urlRef,
       picUrl, picUrlRef,
+      picFile, picFileRef,
 
       isValidUrl,
     }

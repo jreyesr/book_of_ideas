@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin wider-card">
       <q-slide-transition>
-        <q-img v-if="idea.picUrl != ''" :src="idea.picUrl" height="250px" fit="cover">
+        <q-img v-if="picUrl != ''" :src="picUrl" height="250px" fit="cover">
           <template v-slot:error>
             <div class="absolute-full flex flex-center bg-negative text-white">
               Cannot load image
@@ -45,6 +45,8 @@
 </style>
 
 <script>
+import { computed, toRef } from 'vue'
+import { useStore } from 'vuex'
 import { useDialogPluginComponent, openURL } from 'quasar'
 import { linesToArray } from 'src/utils/strings'
 
@@ -58,7 +60,7 @@ export default {
     ...useDialogPluginComponent.emits
   ],
 
-  setup () {
+  setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
     // dialogRef      - Vue ref to be applied to QDialog
     // onDialogHide   - Function to be used as handler for @hide on QDialog
@@ -66,10 +68,16 @@ export default {
     //                    example: onDialogOK() - no payload
     //                    example: onDialogOK({ /*.../* }) - with payload
     // onDialogCancel - Function to call to settle dialog with "cancel" outcome
+    const store = useStore()
+
+    const idea = toRef(props, "idea")
+    const picUrl = computed(() => store.getters["images/getImageSrc"](idea.value.id))
 
     return {
       dialogRef,
       onDialogHide,
+
+      picUrl,
 
       onOKClick: onDialogOK,
       openURL,

@@ -1,11 +1,6 @@
-import { v4 as uuidv4 } from 'uuid'
-
 const findIndex = (state, listId) => state.lists.findIndex((l) => l.id == listId)
 
 export function addNewList (state, { data }) {
-  // Autogenerate a RFC4122 v4 UUID here, and hope it doesn't collide with anything else
-  data.id = uuidv4()
-  data.items = []
   state.lists.push(data)
 }
 
@@ -27,9 +22,6 @@ export function addNewIdea (state, { listId, idea }) {
     return
   }
 
-  // Autogenerate a RFC4122 v4 UUID here, and hope it doesn't collide with anything else
-  idea.id = uuidv4()
-  idea.starred = false
   state.lists[i].items.push(idea)
 }
 
