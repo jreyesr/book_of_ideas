@@ -22,7 +22,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn color="primary" label="Go there!" icon="launch" @click="openURL(idea.url)"/>
+        <q-btn type="a" color="primary" label="Go there!" icon="launch" :href="idea.url" target="_blank"/>
         <!-- <q-btn color="primary" label="OK" @click="onOKClick" /> -->
       </q-card-actions>
     </q-card>
