@@ -29,7 +29,7 @@
   </q-dialog>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wider-card {
   width: 100%;
   max-width: 600px;

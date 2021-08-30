@@ -31,7 +31,7 @@
   </q-page>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .center-children-y {
   display: flex;
   align-items: center;

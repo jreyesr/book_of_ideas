@@ -7,7 +7,7 @@
   </q-card>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .clickable {
   cursor: pointer;
 }

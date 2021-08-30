@@ -57,7 +57,7 @@
   </q-page>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .invisible {
   visibility: hidden;
 }
