@@ -58,12 +58,6 @@
   margin-bottom: 0;
   border-radius: .25rem;
 }
-
-.handle {
-  float: left;
-  padding: 0.5rem;
-  cursor: move;
-}
 </style>
 
 <script>

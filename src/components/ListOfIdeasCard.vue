@@ -38,6 +38,14 @@
   </q-card>
 </template>
 
+<style lang="scss" scoped>
+.handle {
+  float: left;
+  padding: 0.5rem;
+  cursor: move;
+}
+</style>
+
 <script>
 import { ref, toRef, computed } from 'vue'
 import { useQuasar } from 'quasar'
