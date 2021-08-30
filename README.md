@@ -1,10 +1,16 @@
 # Book Of Ideas (book_of_ideas)
 
+[![Build and Deploy](https://github.com/jreyesr/book_of_ideas/actions/workflows/deploy.yml/badge.svg)](https://github.com/jreyesr/book_of_ideas/actions/workflows/deploy.yml)
+
+[Visit the app!](https://jreyesr.github.io/book_of_ideas)
+
 A little app to keep track of interesting ideas (web pages/services, libraries, frameworks, whatever) that you come across in your Internet travels.
 
 Works on your own device (no data is ever transferred to any server). 
 
-## Install the dependencies
+## Development
+
+### Install the dependencies
 ```bash
 yarn
 ```
@@ -16,12 +22,12 @@ yarn dev
 
 ### Lint the files
 ```bash
-yarn run lint
+yarn lint
 ```
 
 ### Build the app for production
 ```bash
-quasar build
+yarn build
 ```
 
 ### Customize the configuration
