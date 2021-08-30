@@ -8,7 +8,9 @@
         </div>
       </div>
       <div class="text-overline" :class="elementColor">
-        {{ item.items.length }} items<span v-if="starredCount > 0">, {{ starredCount }} starred</span>
+        {{ item.items.length }} items<span v-if="starredCount > 0">,
+        {{ starredCount }} starred</span><span v-if="tickedCount > 0">,
+        {{ tickedCount }} done</span>
       </div>
     </q-card-section>
 
@@ -53,12 +55,14 @@ export default {
     const item = toRef(props, "item")
     const elementColor = computed(() => item.value.items.length > 0 ? 'text-green-9' : 'text-orange-9')
     const starredCount = computed(() => item.value.items.filter(i => i.starred === true).length)
+    const tickedCount = computed(() => item.value.items.filter(i => i.ticked === true).length)
 
     const openNewDialog = () => spawnNewIdeaDialog($q, item.value.id, store)
 
     return {
       elementColor,
       starredCount,
+      tickedCount,
 
       expanded: ref(false),
       openNewDialog

@@ -72,3 +72,15 @@ export function toggleStar (state, {listId, itemIndex}) {
   // (should NOT happen, but juuuust in case)
   state.lists[i].items[itemIndex].starred = !(state.lists[i].items[itemIndex].starred ?? false);
 }
+
+export function toggleTicked (state, {listId, itemIndex}) {
+  const i = findIndex(state, listId)
+  if (i == -1) { // Something went horribly wrong here!
+    console.error(`Couldn't find list with ID ${listId}!`)
+    return
+  }
+
+  // If idea.ticked does not exist, it will default to false and be toggled to true
+  // (should NOT happen, but juuuust in case)
+  state.lists[i].items[itemIndex].ticked = !(state.lists[i].items[itemIndex].ticked ?? false);
+}

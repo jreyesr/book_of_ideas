@@ -34,7 +34,7 @@
         @click="openDetails(item)" 
         v-for="(item, i) in filteredIdeas" 
         :key="item.id"
-        :class="item.starred ? 'bg-amber-1' : ''"
+        :class="{starred: item.starred, ticked: item.ticked}"
       >
         <q-item-section thumbnail v-if="picUrl(item)">
           <img :src="picUrl(item)">
@@ -48,9 +48,14 @@
           <q-item-label caption lines="1" v-for="line in linesToArray(item.description)" :key="line">{{ line }}</q-item-label>
         </q-item-section>
         <q-item-section side>
-          <q-btn round flat color="amber" @click.stop="toggleStar(i)">
-            <q-icon :name="item.starred ? 'star' : 'star_outline'"/>
-          </q-btn>
+          <div>
+            <q-btn round flat color="gray" @click.stop="toggleTicked(i)">
+              <q-icon :name="item.ticked ? 'task_alt' : 'radio_button_unchecked'"/>
+            </q-btn>
+            <q-btn round flat color="amber" @click.stop="toggleStar(i)">
+              <q-icon :name="item.starred ? 'star' : 'star_outline'"/>
+            </q-btn>
+          </div>
         </q-item-section>
       </q-item>
     </q-list>
@@ -60,6 +65,20 @@
 <style lang="scss" scoped>
 .invisible {
   visibility: hidden;
+}
+
+.starred {
+  background-color: $amber-1;
+}
+
+.ticked {
+  background-color: $grey-1;
+  color: $grey-8; // Grey text
+
+  // HACK: This depends on .q-item__label being applied to <q-item-label> elements
+  .q-item__label {
+    text-decoration: line-through;
+  }
 }
 </style>
 
@@ -117,6 +136,20 @@ export default {
       store.commit("main/toggleStar", {listId: list.value.id, itemIndex})
     }
 
+    const toggleTicked = (itemIndex) => {
+      const item = list.value.items[itemIndex]
+      const action = item.ticked ? "not done" : "done"
+      $q.notify({
+        message: `Marking ${item.name} as ${action}`,
+        icon: "task_alt",
+        group: "ticking-group", // This forces all tick/untick messages to overwrite each other
+        timeout: 750,
+        // badgeClass: "hidden", // Uncomment this to make the notification counter disappear
+      })
+      
+      store.commit("main/toggleTicked", {listId: list.value.id, itemIndex})
+    }
+
     useMeta(() => {
       return { title: list.value?.name ?? "<Deleted>" }
     })
@@ -135,6 +168,7 @@ export default {
       openListEdit,
       openListDelete,
       toggleStar,
+      toggleTicked,
 
       store
     }
