@@ -37,6 +37,7 @@ export function addNewIdea ({ dispatch, commit, state}, payload) {
   const newId = uuidv4()
   payload.idea.id = newId
   payload.idea.starred = false
+  payload.idea.ticked = false
   delete payload.idea.picFile // Bye! The image should not be saved on the `main` store
   commit("addNewIdea", payload)
 
