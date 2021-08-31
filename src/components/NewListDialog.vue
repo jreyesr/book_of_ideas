@@ -1,52 +1,28 @@
 <template>
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin wider-card">
-<!--       <q-slide-transition>
-        <q-img v-show="picUrl" :src="picUrl" class="short-image" fit="cover">
-          <template v-slot:error>
-            <div class="absolute-full flex flex-center bg-negative text-white">
-              Cannot load image
-            </div>
-          </template>
-        </q-img>
-      </q-slide-transition> -->
-
       <q-card-section>
         <div class="text-h6">New list</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
         <q-input 
-          label="Name" 
           ref="nameRef" 
           v-model="name" 
+          label="Name" 
           autofocus 
           hint="Required" 
           :rules="[val => !!val || 'Field is required']"
         />
         <q-input 
-          label="Description" 
           ref="descriptionRef" 
-          type="textarea" 
-          rows="4"
-          hint="Required"
           v-model="description" 
+          label="Description" 
+          type="textarea"
+          rows="4"
+          hint="Required" 
           :rules="[val => !!val || 'Field is required']"
         />
-        <!-- <q-input 
-          label="Idea URL" 
-          ref="urlRef" 
-          hint="Required"
-          v-model="url" 
-          :rules="[val => !!val || 'Field is required']"
-        />
-        <q-input 
-          label="Picture URL" 
-          ref="picUrlRef" 
-          v-model="picUrl" 
-          clearable 
-          clear-icon="close"
-        /> -->
       </q-card-section>
 
       <q-card-actions align="right">
@@ -57,32 +33,22 @@
   </q-dialog>
 </template>
 
-<style lang="scss" scoped>
-.wider-card {
-  width: 100%;
-  max-width: 600px;
-}
-
-/* .short-image {
-  max-height: 130px;
-} */
-</style>
-
 <script>
 import { ref, toRef } from 'vue'
 import { useDialogPluginComponent } from 'quasar'
 
 export default {
-  emits: [
-    ...useDialogPluginComponent.emits
-  ],
 
   props: {
     list: {
       type: Object,
-      optional: true
+      optional: true,
+      default: () => ({})
     }
   },
+  emits: [
+    ...useDialogPluginComponent.emits
+  ],
 
   setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
@@ -92,8 +58,6 @@ export default {
     // x?.prop ?? '' works whether or not x is defined, and sets a default value of ''
     const name = ref(list?.name ?? ''), nameRef = ref(null)
     const description = ref(list?.description ?? ''), descriptionRef = ref(null)
-    /* const url = ref(''), urlRef = ref(null)
-    const picUrl = ref(''), picUrlRef = ref(null) */
 
     const onValidSubmit = () => {
       const data = {
@@ -102,8 +66,6 @@ export default {
         // id and items will be overwritten in the mutation anyways
         id: list?.id,
         items: list?.items,
-        /* url: url.value,
-        picUrl: picUrl.value, */
       }
       onDialogOK(data)
     }
@@ -111,9 +73,8 @@ export default {
     const onSubmit = () => {
       nameRef.value.validate()
       descriptionRef.value.validate()
-      /* urlRef.value.validate() */
 
-      if (nameRef.value.hasError || descriptionRef.value.hasError /* || urlRef.value.hasError */) {
+      if (nameRef.value.hasError || descriptionRef.value.hasError) {
         // form has error
       } else {
         onValidSubmit()
@@ -135,3 +96,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wider-card {
+  width: 100%;
+  max-width: 600px;
+}
+</style>

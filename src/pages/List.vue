@@ -24,28 +24,28 @@
     <p class="text-body1">{{ list?.description }}</p>
 
     <q-list bordered separator>
-      <q-item v-if="isListEmpty" clickable v-ripple @click="addNew">
+      <q-item v-if="isListEmpty" v-ripple clickable @click="addNew">
         <q-item-section>You have no ideas in this list. Add a new one now!</q-item-section>
       </q-item>
 
-      <q-item v-else 
-        clickable 
+      <q-item v-for="(item, i) in filteredIdeas" 
+        v-else 
+        :key="item.id" 
         v-ripple 
-        @click="openDetails(item)" 
-        v-for="(item, i) in filteredIdeas" 
-        :key="item.id"
+        clickable 
         :class="{starred: item.starred, ticked: item.ticked}"
+        @click="openDetails(item)"
       >
-        <q-item-section thumbnail v-if="picUrl(item)">
+        <q-item-section v-if="picUrl(item)" thumbnail>
           <img :src="picUrl(item)">
         </q-item-section>
-        <q-item-section thumbnail v-else>
+        <q-item-section v-else thumbnail>
           <!-- Placeholder image, just to align the titles -->
           <img class="invisible"> 
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ item.name }}</q-item-label>
-          <q-item-label caption lines="1" v-for="line in linesToArray(item.description)" :key="line">{{ line }}</q-item-label>
+          <q-item-label v-for="line in linesToArray(item.description)" :key="line" caption lines="1">{{ line }}</q-item-label>
         </q-item-section>
         <q-item-section side>
           <div>
@@ -61,26 +61,6 @@
     </q-list>
   </q-page>
 </template>
-
-<style lang="scss" scoped>
-.invisible {
-  visibility: hidden;
-}
-
-.starred {
-  background-color: $amber-1;
-}
-
-.ticked {
-  background-color: $grey-1;
-  color: $grey-8; // Grey text
-
-  // HACK: This depends on .q-item__label being applied to <q-item-label> elements
-  .q-item__label {
-    text-decoration: line-through;
-  }
-}
-</style>
 
 <script>
 import { computed, ref } from 'vue'
@@ -175,3 +155,23 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.invisible {
+  visibility: hidden;
+}
+
+.starred {
+  background-color: $amber-1;
+}
+
+.ticked {
+  background-color: $grey-1;
+  color: $grey-8; // Grey text
+
+  // HACK: This depends on .q-item__label being applied to <q-item-label> elements
+  .q-item__label {
+    text-decoration: line-through;
+  }
+}
+</style>

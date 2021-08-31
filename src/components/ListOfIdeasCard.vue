@@ -38,14 +38,6 @@
   </q-card>
 </template>
 
-<style lang="scss" scoped>
-.handle {
-  float: left;
-  padding: 0.5rem;
-  cursor: move;
-}
-</style>
-
 <script>
 import { ref, toRef, computed } from 'vue'
 import { useQuasar } from 'quasar'
@@ -54,7 +46,16 @@ import { useStore } from 'vuex'
 import { spawnNewIdeaDialog } from 'src/utils/dialogs'
 
 export default {
-  props: ["item", "showHandle"],
+  props: {
+    item: {
+      type: Object,
+      default: () => ({name: "Idea", description: ""})
+    }, 
+    showHandle: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   setup(props) {
     const $q = useQuasar()
@@ -78,3 +79,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.handle {
+  float: left;
+  padding: 0.5rem;
+  cursor: move;
+}
+</style>

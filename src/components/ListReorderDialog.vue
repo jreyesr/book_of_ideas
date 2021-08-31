@@ -7,6 +7,7 @@
 
       <q-card-section class="q-pt-none">
         <draggable
+          v-model="listItems"
           class="list-group"
           tag="transition-group"
           :component-data="{
@@ -14,11 +15,10 @@
             type: 'transition-group',
             name: !drag ? 'flip-list' : null
           }"
-          v-model="listItems"
           v-bind="dragOptions"
+          item-key="id"
           @start="drag = true"
           @end="drag = false"
-          item-key="id"
         >
           <template #item="{ element }">
             <li class="list-group-item">
@@ -39,6 +39,72 @@
     </q-card>
   </q-dialog>
 </template>
+
+<script>
+import { ref, toRef, computed } from 'vue'
+import { useQuasar, useDialogPluginComponent } from 'quasar'
+import { useStore } from 'vuex'
+
+import { spawnIdeaDeleteDialog } from 'src/utils/dialogs'
+
+import draggable from "vuedraggable"
+
+export default {
+  components: { draggable },
+  
+  props: {
+    listId: {
+      type: String,
+      default: ""
+    }
+  },
+
+  emits: [
+    ...useDialogPluginComponent.emits
+  ],
+
+  setup (props) {
+    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+    const $q = useQuasar()
+    const store = useStore()
+
+    const listId = toRef(props, "listId").value
+    const list = store.getters["main/findListById"](listId)
+    const listItems = ref(list.items)
+
+    const onOKClick = () => {
+        onDialogOK({newOrder: listItems.value})
+    }
+
+    const openIdeaDelete = (idea) => {
+      spawnIdeaDeleteDialog($q, listId, idea, store)
+    }
+
+    const dragOptions = computed(() => {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      }
+    })
+
+    return {
+      dialogRef,
+      onDialogHide,
+
+      onOKClick,
+      onCancelClick: onDialogCancel,
+
+      openIdeaDelete,
+
+      listItems,
+      dragOptions,
+      drag: ref(false),
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .wider-card {
@@ -92,66 +158,3 @@
   padding: 0.5rem;
 }
 </style>
-
-<script>
-import { ref, toRef, computed } from 'vue'
-import { useQuasar, useDialogPluginComponent } from 'quasar'
-import { useStore } from 'vuex'
-
-import { spawnIdeaDeleteDialog } from 'src/utils/dialogs'
-
-import draggable from "vuedraggable"
-
-export default {
-  props: {
-    listId: String
-  },
-
-  emits: [
-    ...useDialogPluginComponent.emits
-  ],
-
-  components: { draggable },
-
-  setup (props) {
-    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
-    const $q = useQuasar()
-    const store = useStore()
-
-    const listId = toRef(props, "listId").value
-    const list = store.getters["main/findListById"](listId)
-    const listItems = ref(list.items)
-
-    const onOKClick = () => {
-        onDialogOK({newOrder: listItems.value})
-    }
-
-    const openIdeaDelete = (idea) => {
-      spawnIdeaDeleteDialog($q, listId, idea, store)
-    }
-
-    const dragOptions = computed(() => {
-      return {
-        animation: 200,
-        group: "description",
-        disabled: false,
-        ghostClass: "ghost"
-      }
-    })
-
-    return {
-      dialogRef,
-      onDialogHide,
-
-      onOKClick,
-      onCancelClick: onDialogCancel,
-
-      openIdeaDelete,
-
-      listItems,
-      dragOptions,
-      drag: ref(false),
-    }
-  }
-}
-</script>

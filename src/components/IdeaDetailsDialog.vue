@@ -3,7 +3,7 @@
     <q-card class="q-dialog-plugin wider-card">
       <q-slide-transition>
         <q-img v-if="picUrl != ''" :src="picUrl" height="250px" fit="cover">
-          <template v-slot:error>
+          <template #error>
             <div class="absolute-full flex flex-center bg-negative text-white">
               Cannot load image
             </div>
@@ -12,7 +12,7 @@
       </q-slide-transition>
       <q-card-section>
         <div class="text-h6">
-          <q-icon class="q-pr-md align-baseline" v-if="idea.starred" name="star" color="amber"/>
+          <q-icon v-if="idea.starred" class="q-pr-md align-baseline" name="star" color="amber"/>
           {{ idea.name }}
         </div>
       </q-card-section>
@@ -29,21 +29,6 @@
   </q-dialog>
 </template>
 
-<style lang="scss" scoped>
-.wider-card {
-  width: 100%;
-  max-width: 600px;
-}
-
-.short-image {
-  max-height: 200px;
-}
-
-.align-baseline {
-  vertical-align: baseline;
-}
-</style>
-
 <script>
 import { computed, toRef } from 'vue'
 import { useStore } from 'vuex'
@@ -53,7 +38,10 @@ import { linesToArray } from 'src/utils/strings'
 
 export default {
   props: {
-    idea: Object
+    idea: {
+      type: Object,
+      default: () => ({name: "Idea", description: "", starred: false})
+    }
   },
 
   emits: [
@@ -86,3 +74,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wider-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.short-image {
+  max-height: 200px;
+}
+
+.align-baseline {
+  vertical-align: baseline;
+}
+</style>

@@ -3,7 +3,7 @@
     <q-card class="q-dialog-plugin wider-card">
       <q-slide-transition>
         <q-img v-show="picLink" :src="picLink" class="short-image" fit="cover">
-          <template v-slot:error>
+          <template #error>
             <div class="absolute-full flex flex-center bg-negative text-white">
               Cannot load image
             </div>
@@ -17,27 +17,27 @@
 
       <q-card-section class="q-pt-none">
         <q-input 
-          label="Name" 
           ref="nameRef" 
           v-model="name" 
+          label="Name" 
           autofocus 
           hint="Required" 
           :rules="[val => !!val || 'Field is required']"
         />
         <q-input 
-          label="Description" 
           ref="descriptionRef" 
-          type="textarea" 
-          rows="4"
-          hint="Required"
           v-model="description" 
+          label="Description" 
+          type="textarea"
+          rows="4"
+          hint="Required" 
           :rules="[val => !!val || 'Field is required']"
         />
         <q-input 
-          label="Idea URL" 
           ref="urlRef" 
+          v-model="url" 
+          label="Idea URL"
           hint="Required"
-          v-model="url"
           type="url"
           :rules="[
             val => !!val || 'Field is required',
@@ -46,9 +46,10 @@
         />
 
         <q-option-group
-        class="q-pt-md"
-          dense inline
-          v-model="picSource"
+        v-model="picSource"
+          class="q-pt-md"
+          dense
+          inline
           :options="[
             { label: 'Online image', value: 'url' },
             { label: 'Upload image', value: 'upload' },
@@ -59,9 +60,9 @@
         <q-slide-transition>
           <q-input 
             v-show="picSource === 'url'"
-            label="Picture URL" 
             ref="picUrlRef" 
             v-model="picUrl" 
+            label="Picture URL" 
             clearable 
             clear-icon="close"
             :rules="[
@@ -72,9 +73,9 @@
         <q-slide-transition>
           <q-file
             v-if="picSource === 'upload'"
-            label="Picture"
             ref="picFileRef"
             v-model="picFile"
+            label="Picture"
             accept="image/*"
             clearable
             clear-icon="close"
@@ -93,17 +94,6 @@
     </q-card>
   </q-dialog>
 </template>
-
-<style lang="scss" scoped>
-.wider-card {
-  width: 100%;
-  max-width: 600px;
-}
-
-.short-image {
-  max-height: 130px;
-}
-</style>
 
 <script>
 import { ref, computed } from 'vue'
@@ -175,3 +165,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wider-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.short-image {
+  max-height: 130px;
+}
+</style>

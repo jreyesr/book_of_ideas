@@ -1,7 +1,7 @@
 <template>
   <q-input v-model="text" dark :placeholder="searchHint" dense standout input-class="text-left" class="q-px-md" debounce="500">
-    <template v-slot:append>
-      <q-icon v-if="text !== ''" name="close" @click="text = ''" class="cursor-pointer" />
+    <template #append>
+      <q-icon v-if="text !== ''" name="close" class="cursor-pointer" @click="text = ''" />
     </template>
   </q-input>
 </template>
@@ -11,11 +11,9 @@ import { ref, toRefs, watch, computed } from 'vue'
 import { useStore, mapGetters } from 'vuex'
 
 export default {
-  props: ["location"],
   emits: ["searchTermChange"],
 
   setup(props, context) {
-    //const { location } = toRefs(props)
     const store = useStore()
 
     const text = ref('')

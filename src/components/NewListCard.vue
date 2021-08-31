@@ -7,24 +7,6 @@
   </q-card>
 </template>
 
-<style lang="scss" scoped>
-.clickable {
-  cursor: pointer;
-}
-
-.center-children {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center;
-}
-
-.dashed-border {
-  border-width: 2px;
-  border-style: dashed;
-}
-</style>
-
 <script>
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
@@ -45,3 +27,21 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.clickable {
+  cursor: pointer;
+}
+
+.center-children {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+}
+
+.dashed-border {
+  border-width: 2px;
+  border-style: dashed;
+}
+</style>

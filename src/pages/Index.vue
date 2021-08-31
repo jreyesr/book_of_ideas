@@ -9,56 +9,27 @@
           name: !drag ? 'flip-list' : null
         }"
         handle=".handle"
-        :modelValue="items"
-        @update:modelValue="orderChanged"
+        :model-value="items"
         v-bind="dragOptions"
+        item-key="id"
+        @update:modelValue="orderChanged"
         @start="drag = true"
         @end="drag = false"
-        item-key="id"
       >
         <template #item="{element: item}">
-          <div class="col-12 col-md-6" :key="item.id">
-            <list-of-ideas-card :item="item" :showHandle="!searchActive"/>
+          <div :key="item.id" class="col-12 col-md-6">
+            <list-of-ideas-card :item="item" :show-handle="!searchActive"/>
           </div>
         </template>
         
         <template #footer>
-          <div v-if="!searchActive" class="col-12 col-md-6 center-children-y" key="new_idea">
+          <div v-if="!searchActive" key="new_idea" class="col-12 col-md-6 center-children-y">
             <new-list-card style="flex-grow: 1;"/>
           </div>
         </template>
       </draggable>    
   </q-page>
 </template>
-
-<style lang="scss" scoped>
-.center-children-y {
-  display: flex;
-  align-items: center;
-}
-
-.flip-list-move {
-  transition: transform 0.5s;
-}
-
-.no-move {
-  transition: transform 0s;
-}
-
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-
-.list-group {
-  min-height: 20px;
-  display: flex;
-  flex-direction: row;
-  padding-left: 0;
-  margin-bottom: 0;
-  border-radius: .25rem;
-}
-</style>
 
 <script>
 import { defineComponent, computed, ref } from 'vue'
@@ -109,3 +80,32 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.center-children-y {
+  display: flex;
+  align-items: center;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+
+.no-move {
+  transition: transform 0s;
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+
+.list-group {
+  min-height: 20px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: .25rem;
+}
+</style>
