@@ -77,6 +77,11 @@ export default defineComponent({
     const markTourComplete = () => store.commit("tour/markComplete")
 
     onMounted(() => {
+      // If tour has been completed/dismissed, don't show it again
+      if (store.state.tour.completed)
+        return
+
+      // This will only run if the tour has never been completed
       Shepherd.on("cancel", markTourComplete)
       Shepherd.on("complete", markTourComplete)
 
