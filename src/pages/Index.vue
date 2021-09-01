@@ -74,18 +74,11 @@ export default defineComponent({
       }
     })
 
-    const tourCanceled = () => {
-      console.log("Canceled")
-      // TODO: store.commit("tour/cancel")
-    }
-    const tourComplete = () => {
-      console.log("Completed")
-      // TODO: store.commit("tour/complete")
-    }
+    const markTourComplete = () => store.commit("tour/markComplete")
 
     onMounted(() => {
-      Shepherd.on("cancel", tourCanceled)
-      Shepherd.on("complete", tourComplete)
+      Shepherd.on("cancel", markTourComplete)
+      Shepherd.on("complete", markTourComplete)
 
       const anyLists = store.state.main.lists.length > 0
       const tour = createTour({

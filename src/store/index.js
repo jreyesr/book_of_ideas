@@ -6,6 +6,7 @@ import VuexPersistence from 'vuex-persist'
 import main from './main-module'
 import search from './search-module'
 import images from './images-module'
+import tour from './tour-module'
 
 const persistence = new VuexPersistence({
   storage: localForage,
@@ -13,7 +14,7 @@ const persistence = new VuexPersistence({
   // The JSON.parse(JSON.stringify(x)) dance converts the weird Vue Proxy objects into plain JSON objects
   saveState: (key, state, storage) => storage.setItem(key, JSON.parse(JSON.stringify(state))),
   //restoreState: (key, storage) => storage.getItem(key), // Not required, the default is OK
-  modules: ["main"]
+  modules: ["main", "tour"]
 })
 const imagesPersistence = new VuexPersistence({
   storage: localForage,
@@ -31,6 +32,7 @@ export default store(function (/* { ssrContext } */) {
       main,
       search,
       images,
+      tour
     },
     plugins: [persistence.plugin, imagesPersistence.plugin],
 
