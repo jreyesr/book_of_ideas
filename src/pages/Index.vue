@@ -23,7 +23,7 @@
         </template>
         
         <template #footer>
-          <div v-if="!searchActive" key="new_idea" class="col-12 col-md-6 center-children-y">
+          <div v-if="!searchActive" key="new_idea" class="col-12 col-md-6 center-children-y" data-shepherd-id="add-new">
             <new-list-card style="flex-grow: 1;"/>
           </div>
         </template>
@@ -32,14 +32,18 @@
 </template>
 
 <script>
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMeta } from 'quasar'
 
 import ListOfIdeasCard from 'src/components/ListOfIdeasCard.vue'
 import NewListCard from 'src/components/NewListCard.vue'
 
-import draggable from "vuedraggable"
+import draggable from 'vuedraggable'
+import Shepherd from 'shepherd.js'
+import createTour from 'src/utils/tour'
+
 
 export default defineComponent({
   name: 'PageIndex',
@@ -50,6 +54,7 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
     const items = computed(() => store.getters["search/filtered"])
 
     const searchActive = computed(() => store.getters["search/searchActive"])
@@ -67,6 +72,31 @@ export default defineComponent({
         // disabled: searchActive.value, 
         ghostClass: "ghost",
       }
+    })
+
+    const tourCanceled = () => {
+      console.log("Canceled")
+      // TODO: store.commit("tour/cancel")
+    }
+    const tourComplete = () => {
+      console.log("Completed")
+      // TODO: store.commit("tour/complete")
+    }
+
+    onMounted(() => {
+      Shepherd.on("cancel", tourCanceled)
+      Shepherd.on("complete", tourComplete)
+
+      const anyLists = store.state.main.lists.length > 0
+      const tour = createTour({
+        goToFirstList: async () => {
+          if (anyLists) {
+            await router.replace({name: "list", params: {id: store.state.main.lists[0].id}})
+          }
+        },
+        anyLists
+      })
+      tour.start()
     })
 
     return {

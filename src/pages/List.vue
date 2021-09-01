@@ -7,7 +7,14 @@
 
     <h4>
       {{ list?.name }} 
-      <q-btn v-if="!isListEmpty" flat size="sm" color="primary" class="text-primary q-px-sm" @click="openListReorder">
+      <q-btn 
+        v-if="!isListEmpty" 
+        flat 
+        size="sm" 
+        color="primary" 
+        class="text-primary q-px-sm" 
+        data-shepherd-id="item-mgmt"
+        @click="openListReorder">
         <q-icon name="format_list_bulleted" class="q-mr-xs"/>
         <div>Items</div>
       </q-btn>
@@ -23,7 +30,7 @@
 
     <p class="text-body1">{{ list?.description }}</p>
 
-    <q-list bordered separator>
+    <q-list bordered separator data-shepherd-id="idea-list">
       <q-item v-if="isListEmpty" v-ripple clickable @click="addNew">
         <q-item-section>You have no ideas in this list. Add a new one now!</q-item-section>
       </q-item>
@@ -47,7 +54,7 @@
           <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label v-for="line in linesToArray(item.description)" :key="line" caption lines="1">{{ line }}</q-item-label>
         </q-item-section>
-        <q-item-section side>
+        <q-item-section side data-shepherd-id="idea-actions">
           <div>
             <q-btn round flat color="gray" @click.stop="toggleTicked(i)">
               <q-icon :name="item.ticked ? 'task_alt' : 'radio_button_unchecked'"/>

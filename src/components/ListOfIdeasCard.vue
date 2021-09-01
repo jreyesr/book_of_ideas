@@ -19,7 +19,7 @@
     <q-separator inset />
 
     <q-card-actions>
-      <q-btn flat color="dark" label="Add new" @click="openNewDialog"/>
+      <q-btn flat color="dark" label="Add new item" @click="openNewDialog"/>
 
       <q-space />
 
