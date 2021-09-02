@@ -3,7 +3,7 @@ export default function () {
     lists: [
       {
         id: "15bedb28-3827-43d3-8b38-ca6913459c8c",
-        name: "Robotics",
+        name: "Bananas!",
         description: "A sample todo list (with amazingly creative entries inspired by Danny Connell)",
         items: [
           {id: "ccf6c83a-19c2-4a59-bf4c-7081f454e1d7", name: "Find bananas", url: "https://www.google.com/search?q=banana", description: "What is a banana, anyways?", picUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Banana_and_cross_section.jpg/1920px-Banana_and_cross_section.jpg", starred: false, ticked: true}, 
