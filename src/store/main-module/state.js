@@ -8,7 +8,7 @@ export default function () {
         items: [
           {id: "ccf6c83a-19c2-4a59-bf4c-7081f454e1d7", name: "Find bananas", url: "https://www.google.com/search?q=banana", description: "What is a banana, anyways?", picUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Banana_and_cross_section.jpg/1920px-Banana_and_cross_section.jpg", starred: false, ticked: true}, 
           {id: "5e740ba9-1a09-40d1-a9a6-bd1b65162ca9", name: "Buy bananas", url: "https://www.amazon.com/FRESH-BANANAS-FRUIT-VEGETABLES-PRODUCE/dp/B01BZIQ3P6", description: "BUY THEM ALL!\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. ", picUrl: "", starred: true, ticked: true}, 
-          {id: "c5158f10-e7c8-43e7-bd58-eff61132a99b", name: "Eat bananas", url: "https://www.healthline.com/nutrition/banana-for-breakfast", description: "ROS dashboard (web/desktop app)\nMore active fork of WebViz by Cruise Automation", picUrl: "", starred: true, ticked: false}
+          {id: "c5158f10-e7c8-43e7-bd58-eff61132a99b", name: "Eat bananas", url: "https://www.healthline.com/nutrition/banana-for-breakfast", description: "No description required, I hope", picUrl: "", starred: true, ticked: false}
         ],
       },
       {
